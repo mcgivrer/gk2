@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.webcontext.apps.gk2.models;
 
 import java.util.Date;
@@ -66,11 +63,10 @@ public class Game {
 	 * @param createdAt
 	 * @param createdBy
 	 */
-	public Game(long id, String title, String description, String cover,
+	public Game(String title, String description, String cover,
 			float userRate, float kommunityRate, Date createdAt,
 			String createdBy) {
 		super();
-		this.id = id;
 		this.title = title;
 		this.description = description;
 		this.cover = cover;

@@ -1,7 +1,7 @@
 /target
 /logs
 /db
-/settings
+/.settings
 /.classpath
 /.project
 /.iml

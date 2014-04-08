@@ -162,7 +162,7 @@ public class GenericService<T, PK> {
 		long entityCount = 0;
 		logger.debug(String.format("Count Entity %s occurrence ...",
 				entityClass));
-		Query query = em.createQuery("select count(c) from Contact c");
+		Query query = em.createQuery("select count(x) from "+entityClass.getCanonicalName()+" x");
 		entityCount = (Long) query.getSingleResult();
 		logger.debug(String.format(" +-> found %d occurrences", entityCount));
 		return entityCount;
@@ -178,12 +178,14 @@ public class GenericService<T, PK> {
 		logger.debug(String.format("Save entity %s ...",
 				entityClass.getSimpleName()));
 		try {
-
+			em.getTransaction().begin();
 			em.persist(entity);
-			em.refresh(entity);
 			logger.debug(String.format("insert %s :  %s",
 					entityClass.getSimpleName(), entity));
+			em.getTransaction().commit();
 		} catch (PersistenceException e) {
+			em.getTransaction().rollback();
+			logger.error("unable to persist entity",e);
 			entity = null;
 		}
 		logger.debug("done.");
@@ -201,11 +203,12 @@ public class GenericService<T, PK> {
 				entityClass, id));
 		T entity = null;
 		try {
-
+			em.getTransaction().begin();
 			entity = em.find(entityClass, id);
 			em.remove(entity);
 			logger.debug(String.format("remove entity %s(%s)", entityClass,
 					entity));
+			em.getTransaction().commit();
 
 		} catch (Throwable t) {
 			entity = null;

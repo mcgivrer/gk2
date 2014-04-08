@@ -10,6 +10,7 @@
 		<servlet-class>org.jboss.resteasy.plugins.server.servlet.HttpServletDispatcher</servlet-class>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
+	
 	<!-- Auto scan REST service -->
 	<context-param>
 		<param-name>resteasy.scan</param-name>
